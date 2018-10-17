@@ -133,7 +133,7 @@ def Bottom10ByPredictionRange(recommended):
 	MinimumProperty = result_2.head(1)
 
 	return out_2, MedianProperty, MaximumProperty, MinimumProperty
-
+'''
 def TopXFeature(x, recommended, feature):
 	result = recommended.sort_values(by = [feature], ascending=True)
 	topx = result.head(x)
@@ -143,7 +143,7 @@ def BottomXFeature(x, recommended, feature):
 	result = recommended.sort_values(by = [feature], ascending=True)
 	bottomx = result.tail(x)
 	return bottomx
-
+'''
 
 
 recommended = None
@@ -276,8 +276,8 @@ parser.add_argument('feature')
 
 parser = reqparse.RequestParser()
 """
-@api.route('/ass3/<x>/<feature>')
-@api.param('x', 'The user input x (as Top X or Bottom X)')
+@api.route('/ass3/<feature>')
+#@api.param('x', 'The user input x (as Top X or Bottom X)')
 #@api.param('price', 'The predict_price in the previous action')
 @api.param('feature', 'The feature user want to compare with')
 
@@ -288,18 +288,28 @@ class CustomiseComparison(Resource):
 	@api.doc(description = "Customise comparison prediction results")
 
 	#@requires_auth
-	def get(self, x, feature):
+	def get(self, feature):
 		args = parser.parse_args()
-		x = int(x)
+		#x = int(x)
 		#print("{}".format(x))
 		#print("{}".format(feature))
 		#print("{}".format(recommended))
 		if recommended is None:
-			topx, bottomx = None
+			more_inf = None
+
 
 		elif recommended.empty:
-			topx, bottomx = None
+			more_inf = None
+
 		else:
+			#more_inf = recommended[feature]
+			more_inf = recommended[["YearBuilt","BedroomAbvGr","FullBath","KitchenAbvGr","GarageCars"]]
+			more_inf = more_inf.to_json(orient='records')
+			#more_inf = more_inf.to_json(orient='index')
+			#more_inf = more_inf.to_json(orient='split')
+			print(more_inf)
+
+			'''
 
 			topx = TopXFeature(x, recommended, feature)
 			bottomx = BottomXFeature(x, recommended, feature)
@@ -307,11 +317,12 @@ class CustomiseComparison(Resource):
 
 			topx = topx.to_json(orient='records')
 			bottomx = bottomx.to_json(orient='records')
+			'''
 
 
-		message={"topx":topx,"bottomx":bottomx}
 
-		return message,200
+
+		return more_inf,200
 
 
 if __name__ == '__main__':
