@@ -86,6 +86,8 @@ class MoreInfor(QMainWindow):
         self.button_get1.clicked.connect(self.on_click1)
 
 
+        self.getGraph_discription = QLabel('These pie charts show the comparison for each feature, the entire pie represent all the properties selected from your input range(e.g. (predicted price - 5000) ~ (predicted price + 5000)).')
+
         # graph
         self.ax=[0]*6
         self.figure1 = plt.figure()
@@ -103,7 +105,7 @@ class MoreInfor(QMainWindow):
 
         grid_layout.addWidget(self.button_get1,1,1)
 
-
+        grid_layout.addWidget(self.getGraph_discription,1,6)
 
 
         grid_layout.addWidget(self.canvas1,3,1,10,10)
@@ -121,12 +123,12 @@ class MoreInfor(QMainWindow):
         # grid_layout.setAlignment(self.button_get2,Qt.AlignLeft)
 
 
-        print (grid_layout.columnCount())
-        print (grid_layout.rowCount())
-        # 创建一个窗口对象
+        #print (grid_layout.columnCount())
+        #print (grid_layout.rowCount())
+        # create a window object
         layout_widget = QWidget()
         layout_widget2 = QWidget()
-        # 设置窗口的布局层
+        # design the window's layout
         layout_widget.setLayout(grid_layout)
 
         self.setCentralWidget(layout_widget)
@@ -148,9 +150,9 @@ class MoreInfor(QMainWindow):
         result = r2.json()
         if result==None:
             return
-        print(result)
+        #print(result)
         input_data=pd.read_json(result)
-        print(input_data)
+        #print(input_data)
         dataDict={}
         n=1
         for feature in features[1:]:
@@ -193,7 +195,7 @@ class MoreInfor(QMainWindow):
         data=data.sort_index()
         ind=data.index
         value=data.values
-        print(data)
+        #print(data)
         ax = self.figure1.add_subplot(2,3,(5,6))
         ax.bar(ind,value)
         ax.set_title(data.name,fontsize="20",loc="left")
@@ -253,15 +255,6 @@ class MoreInfor(QMainWindow):
         self.ax[n].set_title(data.name,fontsize="20",loc="left")
 
         self.ax[n].axis('equal')
-
-
-
-
-
-
-
-
-
 
 
 
@@ -343,13 +336,13 @@ class Userform(QMainWindow):
         self.comboBox3.setFixedWidth(180)
 
         #search output
-        self.label_9 = QLabel('Predict Price: $')
+        self.label_9 = QLabel('Predict Price: [This is the predicted price based on your input] $')
         self.label_9.setFont(fontlabel)
         self.lineEdit8 = QLineEdit()
         self.lineEdit8.setFixedHeight(30)
         self.lineEdit8.setFixedWidth(180*2)
 
-        self.label_11 = QLabel('Bottom 10 Records:')
+        self.label_11 = QLabel('Bottom 10 Properties: [This is the bottom 10 properties from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
         self.label_11.setFont(fontlabel)
         self.Records = QTableWidget(10,81)
         #self.Records.setColumnCount(5)
@@ -360,19 +353,19 @@ class Userform(QMainWindow):
 
 
 
-        self.label_12 = QLabel('Max Records:')
+        self.label_12 = QLabel('Maximum Property: [This is the maximum price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
         self.label_12.setFont(fontlabel)
         self.MaxRecords = QTableWidget(1,81)
         self.MaxRecords.setFixedHeight(65*2)
         self.MaxRecords.setFixedWidth(600*2)
 
-        self.label_13 = QLabel('Medium Records:')
+        self.label_13 = QLabel('Median Property: [This is the median price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
         self.label_13.setFont(fontlabel)
         self.MedRecords = QTableWidget(1,81)
         self.MedRecords.setFixedHeight(65*2)
         self.MedRecords.setFixedWidth(600*2)
 
-        self.label_14 = QLabel('Min Records:')
+        self.label_14 = QLabel('Minimum Property:[This is the minimum price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
         self.label_14.setFont(fontlabel)
         self.MinRecords = QTableWidget(1,81)
         self.MinRecords.setFixedHeight(65*2)
@@ -452,22 +445,25 @@ class Userform(QMainWindow):
         Price_Range = self.comboBox3.currentText()
 
 
-        if (Suburb == 'Please Choose A Suburb' or Style =='Please Choose A Property Style' or Built_year =='' or Bedroom_nb =='' or Bathroom_nb =='' or Kitchen_nb =='' or GarageCar_nb =='' or Price_Range==''):
+        if (Suburb == 'Please Choose A Suburb' or Style =='Please Choose A Property Style' or Built_year =='' or Bedroom_nb =='' or Bathroom_nb =='' or Kitchen_nb =='' or GarageCar_nb =='' or Price_Range=='Please Choose A Price Range'):
             print(QMessageBox.warning(self, "Warning", "Features can not be None!", QMessageBox.Yes, QMessageBox.Yes))
             return
         if not (Built_year.isdigit() and Bedroom_nb.isdigit() and Bathroom_nb.isdigit() and Kitchen_nb.isdigit() and GarageCar_nb.isdigit()):
             print(QMessageBox.warning(self, "Warning", "Some Features must be digits!", QMessageBox.Yes, QMessageBox.Yes))
             return
+        if len(Built_year) != 4:
+            print(QMessageBox.warning(self, "Warning", "Built year must be a 4-digit number!", QMessageBox.Yes, QMessageBox.Yes))
+            return
 
         p = f"pricestep={Price_Range}&Property_Type={Style}&Nb_of_Garage={GarageCar_nb}&Nb_of_Kitchen={Kitchen_nb}&Nb_of_Bathroom={Bathroom_nb}&Year_Built={Built_year}&Nb_of_Bedroom={Bedroom_nb}&Suburb={Suburb}"
-        print("pricetep:{}".format(Price_Range))
-        print(p)
+        #print("pricetep:{}".format(Price_Range))
+        #print(p)
         url_1 = "http://127.0.0.1:5000/ass3?" + p
 
 
 
 
-        print(url_1)
+        #print(url_1)
         r = requests.get(url_1)
         #if r.ok:
         result = r.json()
@@ -511,7 +507,7 @@ class Userform(QMainWindow):
         ##### if return is dict
         #max_records = pd.DataFrame.from_dict(max_records)
         max_row = list(max_records[0].values())      #dict
-        print(max_row)
+        #print(max_row)
 
         med_records = result["Median Property"]
         med_records = json.loads(med_records)
@@ -523,7 +519,7 @@ class Userform(QMainWindow):
         min_records = json.loads(min_records)
         ##### if return is dict
         #min_records = pd.DataFrame.from_dict(min_records)
-        print(min_records[0])
+        #print(min_records[0])
         min_row = list(min_records[0].values())
 
         for column in range(81):
@@ -688,15 +684,15 @@ class Authentication(QWidget):
 
         print(username)
         print(password)
-        username="admin"
-        password="admin"
+        #username="admin"
+        #password="admin"
         if (username == "" or password == ""):
             print(QMessageBox.warning(self, "Warning", "username and password can not be Empty!", QMessageBox.Yes, QMessageBox.Yes))
             return
 
         r = requests.get("http://127.0.0.1:5000/ass3/authen", auth=HTTPBasicAuth(username, password))
 
-        print("12312313")
+        #print("12312313")
         if r.ok:
             print(QMessageBox.information(self, "Notification", "Authentication Successfully!", QMessageBox.Yes, QMessageBox.Yes))
             # r = requests.get("http://127.0.0.1:5000/books/206", auth=HTTPBasicAuth(username, password))
