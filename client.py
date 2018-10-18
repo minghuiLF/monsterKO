@@ -43,15 +43,15 @@ Neighborhood = ['BrkSide',
  'IDOTRR']
 Price_range =["5000","7000","10000","20000","30000"]
 
-features =["Built Year","Bedroom Number","Bathroom Number","Kitchen Number","Garagecars Number"]
+features =["Year Built","Bedroom Number","Bathroom Number","Kitchen Number","Garage Capacity"]
 
 
 features_dic={
-    "Built Year":"YearBuilt",
+    "Year Built":"YearBuilt",
     "Bedroom Number":"BedroomAbvGr",
     "Bathroom Number":"FullBath",
     "Kitchen Number":"KitchenAbvGr",
-    "Garagecars Number":"GarageCars"
+    "Garage Capacity":"GarageCars"
 }
 features_dic2={v:x for x,v in features_dic.items()}
 
@@ -87,7 +87,7 @@ class MoreInfor(QMainWindow):
 
 
         self.getGraph_discription = QLabel('These pie charts show the comparison for each feature, the entire pie represent all the properties selected from your input range(e.g. (predicted price - 5000) ~ (predicted price + 5000)).')
-
+        self.getGraph_discription.setFont(fontlabel)
         # graph
         self.ax=[0]*6
         self.figure1 = plt.figure()
@@ -278,9 +278,9 @@ class Userform(QMainWindow):
 
         self.label_1 = QLabel(' Suburb')
         self.label_1.setFont(fontlabel)
-        self.label_2 = QLabel(' Style')
+        self.label_2 = QLabel(' Property type')
         self.label_2.setFont(fontlabel)
-        self.label_3 = QLabel(' Built Year')
+        self.label_3 = QLabel(' Year Built')
         self.label_3.setFont(fontlabel)
         self.label_4 = QLabel(' Bedroom Number')
         self.label_4.setFont(fontlabel)
@@ -288,7 +288,7 @@ class Userform(QMainWindow):
         self.label_5.setFont(fontlabel)
         self.label_6 = QLabel(' Kitchen Number')
         self.label_6.setFont(fontlabel)
-        self.label_7 = QLabel(' Garagecars Number')
+        self.label_7 = QLabel(' Garage capacity')
         self.label_7.setFont(fontlabel)
         self.label_8 = QLabel(' Price Range')
         self.label_8.setFont(fontlabel)
@@ -310,7 +310,7 @@ class Userform(QMainWindow):
         self.comboBox1.addItems(Neighborhood)
         self.comboBox1.setFixedWidth(210)
         self.comboBox2 = QComboBox()
-        self.comboBox2.addItem('Please Choose A Property Style')
+        self.comboBox2.addItem('Please Choose A Property Type')
         self.comboBox2.addItems(housestyle)
         self.comboBox2.setFixedWidth(210)
 
@@ -336,13 +336,13 @@ class Userform(QMainWindow):
         self.comboBox3.setFixedWidth(180)
 
         #search output
-        self.label_9 = QLabel('Predict Price: [This is the predicted price based on your input] $')
+        self.label_9 = QLabel('Predict Price: $')
         self.label_9.setFont(fontlabel)
         self.lineEdit8 = QLineEdit()
         self.lineEdit8.setFixedHeight(30)
         self.lineEdit8.setFixedWidth(180*2)
 
-        self.label_11 = QLabel('Bottom 10 Properties: [This is the bottom 10 properties from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
+        self.label_11 = QLabel('Bottom 10 Properties: \n[This is the bottom 10 properties from \nthe range(e.g. (predicted price - 5000) \n~ (predicted price + 5000)) you select]')
         self.label_11.setFont(fontlabel)
         self.Records = QTableWidget(10,81)
         #self.Records.setColumnCount(5)
@@ -353,19 +353,19 @@ class Userform(QMainWindow):
 
 
 
-        self.label_12 = QLabel('Maximum Property: [This is the maximum price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
+        self.label_12 = QLabel('Maximum Property: \n[This is the maximum price property from \nthe range(e.g. (predicted price - 5000) \n~ (predicted price + 5000)) you select]')
         self.label_12.setFont(fontlabel)
         self.MaxRecords = QTableWidget(1,81)
         self.MaxRecords.setFixedHeight(65*2)
         self.MaxRecords.setFixedWidth(600*2)
 
-        self.label_13 = QLabel('Median Property: [This is the median price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
+        self.label_13 = QLabel('Median Property: \n[This is the median price property from \nthe range(e.g. (predicted price - 5000) \n~ (predicted price + 5000)) you select]')
         self.label_13.setFont(fontlabel)
         self.MedRecords = QTableWidget(1,81)
         self.MedRecords.setFixedHeight(65*2)
         self.MedRecords.setFixedWidth(600*2)
 
-        self.label_14 = QLabel('Minimum Property:[This is the minimum price property from the range(e.g. (predicted price - 5000) ~ (predicted price + 5000)) you select]')
+        self.label_14 = QLabel('Minimum Property: \n[This is the minimum price property from \nthe range(e.g. (predicted price - 5000) \n~ (predicted price + 5000)) you select]')
         self.label_14.setFont(fontlabel)
         self.MinRecords = QTableWidget(1,81)
         self.MinRecords.setFixedHeight(65*2)
@@ -445,14 +445,14 @@ class Userform(QMainWindow):
         Price_Range = self.comboBox3.currentText()
 
 
-        if (Suburb == 'Please Choose A Suburb' or Style =='Please Choose A Property Style' or Built_year =='' or Bedroom_nb =='' or Bathroom_nb =='' or Kitchen_nb =='' or GarageCar_nb =='' or Price_Range=='Please Choose A Price Range'):
+        if (Suburb == 'Please Choose A Suburb' or Style =='Please Choose A Property Type' or Built_year =='' or Bedroom_nb =='' or Bathroom_nb =='' or Kitchen_nb =='' or GarageCar_nb =='' or Price_Range=='Please Choose A Price Range'):
             print(QMessageBox.warning(self, "Warning", "Features can not be None!", QMessageBox.Yes, QMessageBox.Yes))
             return
         if not (Built_year.isdigit() and Bedroom_nb.isdigit() and Bathroom_nb.isdigit() and Kitchen_nb.isdigit() and GarageCar_nb.isdigit()):
             print(QMessageBox.warning(self, "Warning", "Some Features must be digits!", QMessageBox.Yes, QMessageBox.Yes))
             return
         if len(Built_year) != 4:
-            print(QMessageBox.warning(self, "Warning", "Built year must be a 4-digit number!", QMessageBox.Yes, QMessageBox.Yes))
+            print(QMessageBox.warning(self, "Warning", "Year Built must be a 4-digit number!", QMessageBox.Yes, QMessageBox.Yes))
             return
 
         p = f"pricestep={Price_Range}&Property_Type={Style}&Nb_of_Garage={GarageCar_nb}&Nb_of_Kitchen={Kitchen_nb}&Nb_of_Bathroom={Bathroom_nb}&Year_Built={Built_year}&Nb_of_Bedroom={Bedroom_nb}&Suburb={Suburb}"
