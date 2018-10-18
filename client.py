@@ -86,8 +86,12 @@ class MoreInfor(QMainWindow):
         self.button_get1.clicked.connect(self.on_click1)
 
 
-        self.getGraph_discription = QLabel('These pie charts show the comparison for each feature, the entire pie represent all the properties selected from your input range(e.g. (predicted price - 5000) ~ (predicted price + 5000)).')
-        self.getGraph_discription.setFont(fontlabel)
+        self.getGraph_discription = QLabel('These pie charts show the comparison for each feature,the entire pie represent all the properties selected from your input range(e.g. (predicted price - 5000) ~ (predicted price + 5000)).')
+        self.getGraph_discription.setFont(QFont("Times",12))
+        self.getGraph_discription.setFixedSize(1200,120)
+        self.getGraph_discription.adjustSize()
+        self.getGraph_discription.setWordWrap(1)
+
         # graph
         self.ax=[0]*6
         self.figure1 = plt.figure()
@@ -270,7 +274,7 @@ class Userform(QMainWindow):
 
     def FormDesign(self):   # grid style
         self.label_descrip = QLabel('Please Input Your Search Features')
-        fontlabel = QFont("Times",12)
+        fontlabel = QFont("Times",11)
 
         self.label_descrip.setFont(fontlabel)
 
@@ -358,6 +362,7 @@ class Userform(QMainWindow):
         self.MaxRecords = QTableWidget(1,81)
         self.MaxRecords.setFixedHeight(65*2)
         self.MaxRecords.setFixedWidth(600*2)
+
 
         self.label_13 = QLabel('Median Property: \n[This is the median price property from \nthe range(e.g. (predicted price - 5000) \n~ (predicted price + 5000)) you select]')
         self.label_13.setFont(fontlabel)
@@ -682,8 +687,7 @@ class Authentication(QWidget):
         username = self.name_box.text()
         password = self.passwd_box.text()
 
-        print(username)
-        print(password)
+
         #username="admin"
         #password="admin"
         if (username == "" or password == ""):
