@@ -218,16 +218,16 @@ class ass3(Resource):
 			Nb_of_Kitchen = args.get('Nb_of_Kitchen')
 			x_test.append(int(Nb_of_Kitchen))
 			Nb_of_Garage = args.get('Nb_of_Garage')
-			print("Nb_of_Garage {}".format(Nb_of_Garage))
+			#print("Nb_of_Garage {}".format(Nb_of_Garage))
 			x_test.append(int(Nb_of_Garage))
 			Pricestep = args.get('pricestep')
-			print("price ste: {}".format(Pricestep))
+			#print("price ste: {}".format(Pricestep))
 		except:
 			#print(x_test)
 			return api.abort(400, "requirements invalid")
 		#Match = FindMatchByInputFeatures(data_train, Suburb, Year_Built, Style, Nb_of_Bedroom,Nb_of_Bathroom,Nb_of_Kitchen,Nb_of_Garage)
-		print(Pricestep)
-		print(x_test)
+		#print(Pricestep)
+		#print(x_test)
 		predict_price = model_predict(model, x_test)
 
 		global recommended
