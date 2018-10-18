@@ -1,0 +1,11 @@
+What we have implemented is a servive that can predict property price based on the client's inputs with these features: 
+Suburb, Property Type, year built, # Bedroom, # Bathroom, # Kitchen, Garage Capacity, Price Range.
+
+Here comes a scenario. As a client, I want to look at a specific suburb and the other features as the constraints, and the predicted price.
+I input the 7 features I want, and the floating range I can accept. Then I can get the Predicted price for me between this range, then 
+followed with the bottom 10 Price properties details, the maximum price property details, the median price property details and
+the minimum price property details.
+
+If I want to get an overall view of each feature, I click on the more information button, get to another page. It shows 4 pie charts
+represent proportion in that price range for Bedroom number, Bathroom number, Kitchen number, Garage Capacity respectively. And a barchart
+shows the number of properties built in each year.
