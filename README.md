@@ -1,10 +1,10 @@
-# 9321proj3
+# proj
 
 
 
 
 
-Group: Monster_K_O      Members: Jing Wu, Weirong Xie, Yinlun Pan,  Minghui Zhan
+Group: Monster_K_O      Members: Jing Wu, Yinlun Pan,  Minghui Zhan
 
 1.   Aim of project: Provide services like property price prediction, properties recommendation and comparison based on clients’ requirements (suburb, number of rooms, etc.)
 
@@ -20,11 +20,11 @@ https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data
 
 7/10/2018 - 9/10/2018: Dataset collect and cleaning: Wu Zhan Pan
 
-9/10/2018 - 18/10/2018: Build machine learning model: Pan Zhan Wu
+9/10/2018 - 18/10/2018: Build machine learning model:  Zhan Wu
 
-9/10/2018 - 18/10/2018: Design API and authentication scheme: Xie and Pan
+9/10/2018 - 18/10/2018: Design API and authentication scheme: Wu Pan
 
-9/10/2018 - 18/10/2018: Design Client GUI: Zhan Wu Pan
+9/10/2018 - 18/10/2018: Design Client GUI: Zhan Pan
 
 6. Meeting Details：
 
