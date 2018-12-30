@@ -39,3 +39,8 @@ https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data
 <img width=700 src="/meeting5.png"><img/>
 
 <img width=600 src="/meeting3.png"><img/>
+
+
+8.Demo:
+<img width=600 src="/re.png"><img/>
+
